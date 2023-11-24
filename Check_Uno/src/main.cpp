@@ -29,17 +29,7 @@ void print_init(){
         B00100
     };
 
-    byte down1[8] = {
-        B00100,
-        B00100,
-        B00100,
-        B00100,
-        B00100,
-        B00100,
-        B00100,
-        B00100
-    };
-    byte down2[8] = { // left4
+    byte down4[8] = { // left4
         B01000,
         B00100,
         B00010,
@@ -49,7 +39,7 @@ void print_init(){
         B00000,
         B00000
     };
-    byte down3[8] = {
+    byte down5[8] = {
         B00100,
         B00100,
         B00100,
@@ -59,7 +49,7 @@ void print_init(){
         B01110,
         B00100
     };
-    byte down4[8] = { // right5
+    byte down6[8] = { // right6
         B00010,
         B00100,
         B01000,
@@ -70,26 +60,6 @@ void print_init(){
         B00000
     };
 
-    byte right1[8] = {
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B11111
-    };
-    byte right2[8] = {
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B11111,
-    };
     byte right3[8] = {
         B00000,
         B00000,
@@ -112,54 +82,10 @@ void print_init(){
         B00000
     };
 
-    byte left2[8] = {
-        B01000,
-        B10000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B11111
-    };
-
-    byte left3[8] = {
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B11111
-    };
-
-    byte left4[8] = {
-        B01000,
-        B00100,
-        B00010,
-        B00001,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-    };
-
-    byte left5[8] = {
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B00000,
-        B10000,
-        B01000,
-        B00000,
-    };
-
     lcd.createChar(1, up1);
     lcd.createChar(2, up2);
-    lcd.createChar(3, down2);
-    lcd.createChar(4, down3);
+    lcd.createChar(3, down4);
+    lcd.createChar(4, down5);
     lcd.createChar(5, down4);
     lcd.createChar(6, right3);
     lcd.createChar(7, left1);
