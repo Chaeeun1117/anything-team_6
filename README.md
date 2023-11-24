@@ -4,11 +4,11 @@
 
 조장
 --------------
-배채은
+[배채은](https://github.com/Chaeeun1117)
 
 팀원
 --------------
-김건호
+[김건호](https://github.com/secripite)
 <br/> 
 이다은
 <br/>
