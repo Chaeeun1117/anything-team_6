@@ -10,8 +10,8 @@
 --------------
 [김건호](https://github.com/secripite)
 <br/> 
-이다은
+[이다은](https://github.com/daeunlee1125)
 <br/>
 [최진혁](https://github.com/daniel0406070)
 <br/>
-홍영민
+[홍영민](https://github.com/kameyume)
