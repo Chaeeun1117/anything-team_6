@@ -86,7 +86,7 @@ void print_init(){
     lcd.createChar(2, up2);
     lcd.createChar(3, down4);
     lcd.createChar(4, down5);
-    lcd.createChar(5, down4);
+    lcd.createChar(5, down6);
     lcd.createChar(6, right3);
     lcd.createChar(7, left1);
 }
