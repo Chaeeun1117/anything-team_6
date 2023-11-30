@@ -6,11 +6,85 @@
 #include <RF24.h>
 #include <SPI.h>
 
+#include <time.h>
+
+#define MAX 5
+
+int randNumber[MAX];
+
+
 RF24 radio(9,8);
 const byte address[6] = "01101";
 
 LiquidCrystal lcd(7,6,5,4,3,2);
 enum direction {UP, DOWN, RIGHT, LEFT};
+
+
+void random_sign(){
+        // 랜덤값 생성 코드
+    for(int i = 0; i < MAX ; i++)
+    {
+        randNumber[i] = rand() % 4 + 1;
+    }
+
+    /*
+    LCD표시 코드
+    */
+
+    //임시 시리얼 모니터 확인용 코드
+    for (int i = 0; i < MAX; i++)
+    {
+        Serial.print(randNumber[i]);
+    }
+    return;
+}
+
+int input_btn(){
+    //버튼 입력 함수
+    int btn1_state = 0,
+        btn2_state = 0,
+        btn3_state = 0,
+        btn4_state = 0,
+        resetbtn_state = 0;
+    
+    btn1_state = digitalRead(btn1);
+    btn2_state = digitalRead(btn2);
+    btn3_state = digitalRead(btn3);
+    btn4_state = digitalRead(btn4);
+    resetbtn_state = digitalRead(resetbtn);
+
+    if (btn1_state == 1)
+    {
+        return 1;
+    }
+    else if(btn2_state == 1)
+    {
+        return 2;
+    }
+    else if(btn3_state == 1)
+    {
+        return 3;
+    }
+    else if(btn4_state == 1)
+    {
+        return 4;
+    }
+    else
+    {
+        return 5;
+    }
+}
+
+int check_btn(int rand_numbers, int btn_value){
+    //랜덤 생성 넘버와 비교
+    if(rand_numbers == btn_value){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
 
 
 void print_init(){
