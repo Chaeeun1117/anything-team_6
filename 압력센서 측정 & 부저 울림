@@ -1,0 +1,44 @@
+const int pressurePin = A0;  // 압력 센서 연결 핀
+const int buzzerPin = 9;    // 부저 연결 핀
+int tones[] = {261, 277, 294, 311, 330, 349, 370, 392};
+int numTones = 8;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(pressurePin, INPUT);
+  pinMode(buzzerPin, OUTPUT);
+}
+
+void loop() {
+  int pressureThreshold = 500;  // 압력 감지 임계값 (조절 필요)
+
+  unsigned long startTime = millis();  // 현재 시간 기록
+  unsigned long duration = 0;
+  unsigned long pressureDetectedTime = 0;
+  bool pressureDetected = false;
+
+  while (duration < 300000) {  // 300초(300,000 밀리초) 동안 반복
+    int pressureValue = analogRead(pressurePin);
+    Serial.println(pressureValue);
+
+    // 일정 압력 이상인지 감지
+    if (pressureValue > pressureThreshold) {
+      pressureDetected = true;
+      pressureDetectedTime += 1000;  // 압력이 감지된 시간 기록
+      Serial.println(pressureDetectedTime);
+    } 
+
+    delay(1000);  // 1초 대기
+    duration = millis() - startTime;  // 경과 시간 계산
+  }
+
+  // 300초가 끝나면 압력이 150초 이상 동안 감지되었는지 확인하고 부저 울림
+  if (pressureDetectedTime >= 150000) {
+    for(int i = 0; i < numTones; i++)  {
+        tone(buzzerPin, tones[i]);
+        delay(500);
+      }
+      noTone(buzzerPin);
+      delay(1000);
+    } 
+}
