@@ -1,18 +1,22 @@
-#include <Arduino.h>
+#include <stdlib.h>
+#include <nRF24L01.h>
+#include <RF24.h>
+#include <SPI.h>
 
-// put function declarations here:
-int myFunction(int, int);
+RF24 radio(9,8);
+const byte address[6] = "01101";
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+    radio.begin();
+    radio.openWritingPipe(address);
+    radio.setPALevel(RF24_PA_MIN);
+
+    radio.stopListening();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+    //임시 RF24 수신 테스트 코드
+    const char text[] = "Hello World";
+    radio.write(&text, sizeof(text));
+    delay(1000);
 }

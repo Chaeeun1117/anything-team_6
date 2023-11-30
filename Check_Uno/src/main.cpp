@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <nRF24L01.h>
 #include <RF24.h>
-RF24 radio(7, 8); 
-const byte address[6] = "00001";
+#include <SPI.h>
+
+RF24 radio(9,8);
+const byte address[6] = "01101";
 
 LiquidCrystal lcd(7,6,5,4,3,2);
 enum direction {UP, DOWN, RIGHT, LEFT};
@@ -158,19 +160,29 @@ void setup() {
     print_init();
 
     radio.begin();
-    radio.openWritingPipe(address); // 데이터를 보낼 수신의 주소를 설정합니다.
-    radio.setPALevel(RF24_PA_MIN); // 전원공급에 관한 파워레벨을 설정합니다.
-    radio.stopListening();  //모듈을 송신기로 설정합니다.   
+    radio.openReadingPipe(0, address);
+    radio.setPALevel(RF24_PA_MIN);
 
+    radio.startListening();
 }
 
 void loop() {
-    int j;
 
-    lcd.clear();
-    for(int i=0; i<5; i++){
-        j = rand()%4;
-        print_arrow(i, (direction)j);
+    //임시 화살표 테스트 코드
+    // lcd.clear();
+    // int j;
+    // for(int i=0; i<5; i++){
+    //     j = rand()%4;
+    //     print_arrow(i, (direction)j);
+    // }
+    // delay(2000);
+
+    //임시 RF24 수신 테스트 코드
+    if (radio.available()) {
+        char text[32] = "";
+        radio.read(&text, sizeof(text));
+        lcd.clear();
+        lcd.setCursor(0,0);
+        lcd.print(text);
     }
-    delay(2000);
 }
