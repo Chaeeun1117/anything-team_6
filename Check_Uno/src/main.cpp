@@ -2,8 +2,12 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <stdlib.h>
+#include <nRF24L01.h>
+#include <RF24.h>
+RF24 radio(7, 8); 
+const byte address[6] = "00001";
 
-LiquidCrystal lcd(12, 11, 7, 6, 5, 4);
+LiquidCrystal lcd(7,6,5,4,3,2);
 enum direction {UP, DOWN, RIGHT, LEFT};
 
 
@@ -152,6 +156,11 @@ void print_arrow(int i, direction j){ //i는 슬롯(0~4) j는 화살표 방향
 void setup() {
     lcd.begin(16, 2);
     print_init();
+
+    radio.begin();
+    radio.openWritingPipe(address); // 데이터를 보낼 수신의 주소를 설정합니다.
+    radio.setPALevel(RF24_PA_MIN); // 전원공급에 관한 파워레벨을 설정합니다.
+    radio.stopListening();  //모듈을 송신기로 설정합니다.   
 
 }
 
