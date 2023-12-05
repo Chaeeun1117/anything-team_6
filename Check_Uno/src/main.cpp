@@ -9,6 +9,11 @@
 #include <time.h>
 
 #define MAX 5
+#define btn1 1
+#define btn2 2
+#define btn3 3
+#define btn4 4
+#define resetbtn 5
 
 int randNumber[MAX];
 
@@ -27,15 +32,12 @@ void random_sign(){
         randNumber[i] = rand() % 4 + 1;
     }
 
-    /*
-    LCD표시 코드
-    */
-
-    //임시 시리얼 모니터 확인용 코드
-    for (int i = 0; i < MAX; i++)
-    {
-        Serial.print(randNumber[i]);
+    //lcd 화살표 출력 코드
+    lcd.clear();
+    for(int i = 0; i < MAX; i++){
+        print_arrow(i, (direction)randNumber[i]-1);
     }
+    delay(2000);
     return;
 }
 
@@ -238,10 +240,56 @@ void setup() {
     radio.setPALevel(RF24_PA_MIN);
 
     radio.startListening();
+
+    pinMode(btn1, INPUT);
+    pinMode(btn2, INPUT);
+    pinMode(btn3, INPUT);
+    pinMode(btn4, INPUT);
+    pinMode(resetbtn, INPUT);
 }
 
 void loop() {
 
+    int cnt = 0;
+
+    while (cnt < 3)
+    {
+        random_sign();
+        int check_cnt = 0;
+        int reset_cnt = 0;
+        while (1)
+        {
+            int btn_value = input_btn();
+
+
+            if(check_cnt > 5)//버튼 횟수 5회 이상
+                break;
+
+            if (reset_cnt > 3)//리셋 버튼 횟수 3회 이상
+            {
+                return;
+            }
+            
+            if (btn_value == 5)//리셋 버튼 눌렀을 때
+            {
+                reset_cnt++;
+                continue;
+            }
+            
+            if(check_btn(randNumber[check_cnt], btn_value - 1)){//버튼 값 확인
+                //맞았을 때
+                check_cnt++;
+            }
+            else
+            {
+                //틀렸습니다.
+                cnt = -1;// 카운트 초기화
+                break;
+            }
+        }
+        cnt++;
+    }
+    
     //임시 화살표 테스트 코드
     // lcd.clear();
     // int j;
